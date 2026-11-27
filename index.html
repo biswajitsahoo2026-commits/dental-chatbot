@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clove Dental – Noida Sector 143 | AI Appointment Assistant</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom Scrollbar for Chat & CRM */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(156, 163, 175, 0.5);
+            border-radius: 20px;
+        }
+        /* Typing indicator animation */
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        /* Smooth message entry */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .msg-animate {
+            animation: fadeInUp 0.25s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Top Clinic Header Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-teal-600 flex items-center justify-center text-white font-bold text-xl shadow-sm">
+                    <i class="fa-solid fa-tooth"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="font-bold text-lg tracking-tight text-slate-900">Clove Dental</span>
+                        <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 border border-teal-200">Noida Sector 143</span>
+                    </div>
+                    <p class="text-xs text-slate-500 hidden sm:block">GS 02, Group Housing Plot No GH 01B, Sector 143, Noida</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="tel:+919667353232" class="hidden md:flex items-center space-x-2 text-sm font-medium text-slate-700 hover:text-teal-600 transition px-3 py-1.5 rounded-lg hover:bg-slate-50">
+                    <i class="fa-solid fa-phone text-teal-600"></i>
+                    <span>+91 9667353232</span>
+                </a>
+                <button onclick="toggleCrmDrawer()" class="flex items-center space-x-2 text-xs sm:text-sm font-medium bg-slate-900 text-white px-3.5 py-2 rounded-xl hover:bg-slate-800 transition shadow-sm">
+                    <i class="fa-solid fa-database text-teal-400"></i>
+                    <span>CRM & API Inspector</span>
+                    <span id="crm-badge" class="bg-teal-500 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full">Live</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace: Left Clinic Context + Center Interactive Chatbot -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left Info Panel (Visible on Desktop, summarizes clinic rules & capabilities) -->
+        <div class="lg:col-span-5 space-y-5 order-2 lg:order-1">
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <span class="inline-flex items-center space-x-1.5 text-xs font-semibold text-teal-700 bg-teal-50 px-3 py-1 rounded-full mb-3">
+                    <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+                    <span>AI Dental Concierge Active</span>
+                </span>
+                <h1 class="text-2xl font-bold text-slate-900 mb-2">Your Smile Deserves Expert Care in Sector 143</h1>
+                <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                    Use our virtual dental assistant to explore treatments, triage symptoms safely, check real-time availability, and confirm your appointment with OTP verification.
+                </p>
+                
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="text-slate-400 font-medium mb-1"><i class="fa-regular fa-clock text-teal-600 mr-1"></i> Operating Hours</div>
+                        <div class="font-semibold text-slate-800">11:00 AM – 7:00 PM</div>
+                        <div class="text-rose-600 font-medium mt-0.5">Closed on Mondays</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div class="text-slate-400 font-medium mb-1"><i class="fa-solid fa-location-dot text-teal-600 mr-1"></i> Clinic Location</div>
+                        <div class="font-semibold text-slate-800">Plot No GH 01B</div>
+                        <div class="text-slate-500 mt-0.5">Sector 143, Noida</div>
+                    </div>
+                </div>
+
+                <div class="mt-5 pt-4 border-t border-slate-100 flex flex-wrap gap-2">
+                    <button onclick="triggerQuickAction('Book an Appointment')" class="text-xs font-medium bg-teal-600 text-white px-3.5 py-2 rounded-xl hover:bg-teal-700 transition">
+                        Start Booking Flow
+                    </button>
+                    <button onclick="triggerQuickAction('Emergency Test')" class="text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200 px-3.5 py-2 rounded-xl hover:bg-rose-100 transition">
+                        Simulate Emergency
+                    </button>
+                    <button onclick="triggerQuickAction('Reschedule / Cancel')" class="text-xs font-medium bg-slate-100 text-slate-700 px-3.5 py-2 rounded-xl hover:bg-slate-200 transition">
+                        Manage Booking
+                    </button>
+                    <button onclick="resetConversation()" class="text-xs font-medium text-slate-500 hover:text-slate-800 px-2.5 py-2 rounded-xl transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Reset Chat
+                    </button>
+                </div>
+            </div>
+
+            <!-- Guardrails & Compliance Card -->
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm text-xs space-y-2.5">
+                <h3 class="font-semibold text-slate-900 flex items-center">
+                    <i class="fa-solid fa-shield-halved text-teal-600 mr-2"></i> Built-in Clinical & Privacy Guardrails
+                </h3>
+                <ul class="space-y-1.5 text-slate-600">
+                    <li class="flex items-start"><i class="fa-solid fa-check text-teal-500 mt-0.5 mr-2"></i><span><strong>Non-Diagnostic Triage:</strong> Gathers symptom context without diagnosing or prescribing.</span></li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-teal-500 mt-0.5 mr-2"></i><span><strong>Emergency Escalation:</strong> Instant priority routing for severe pain, swelling, or trauma.</span></li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-teal-500 mt-0.5 mr-2"></i><span><strong>Branch Schedule Enforcement:</strong> Blocks past dates & Monday weekly offs automatically.</span></li>
+                    <li class="flex items-start"><i class="fa-solid fa-check text-teal-500 mt-0.5 mr-2"></i><span><strong>DPDP Privacy & OTP:</strong> Explicit consent notice, masked mobile numbers, and verified booking IDs.</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right/Center Chatbot Widget Container -->
+        <div class="lg:col-span-7 order-1 lg:order-2 w-full">
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col h-[660px] max-h-[82vh]">
+                
+                <!-- Chat Header -->
+                <div class="bg-gradient-to-r from-teal-700 to-teal-600 px-5 py-4 text-white flex items-center justify-between shrink-0">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <div class="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white text-xl border border-white/20">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 border-2 border-teal-700 rounded-full"></span>
+                        </div>
+                        <div>
+                            <h2 class="font-semibold text-base leading-tight">Clove Dental Assistant</h2>
+                            <p class="text-xs text-teal-100">Noida Sector 143 • Typically replies instantly</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleLanguageHint()" title="Supports English, Hindi & Hinglish" class="text-xs bg-white/15 hover:bg-white/25 px-2.5 py-1.5 rounded-xl transition font-medium">
+                            EN / हिंदी
+                        </button>
+                        <button onclick="resetConversation()" title="Restart Conversation" class="w-8 h-8 rounded-xl bg-white/15 hover:bg-white/25 flex items-center justify-center transition">
+                            <i class="fa-solid fa-arrows-rotate text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Feed -->
+                <div id="chat-messages" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 bg-slate-50/70 custom-scrollbar">
+                    <!-- Messages injected dynamically -->
+                </div>
+
+                <!-- Dynamic Interactive Widget Area (Date Picker, OTP box, Quick Replies) -->
+                <div id="interactive-area" class="bg-white border-t border-slate-100 px-4 py-2.5 max-h-48 overflow-y-auto custom-scrollbar shrink-0 empty:hidden">
+                    <!-- Quick replies or special inputs injected here -->
+                </div>
+
+                <!-- Chat Input Bar -->
+                <form id="chat-form" onsubmit="handleUserSubmit(event)" class="bg-white border-t border-slate-200 p-3 sm:p-4 flex items-center space-x-2 shrink-0">
+                    <input 
+                        type="text" 
+                        id="user-input" 
+                        placeholder="Type your message, dental concern, or question..." 
+                        autocomplete="off"
+                        class="flex-1 bg-slate-100 text-slate-800 placeholder-slate-400 text-sm rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:bg-white transition"
+                    >
+                    <button 
+                        type="submit" 
+                        id="send-btn"
+                        class="bg-teal-600 hover:bg-teal-700 active:scale-95 text-white w-11 h-11 rounded-2xl flex items-center justify-center transition shadow-sm shrink-0"
+                        aria-label="Send Message"
+                    >
+                        <i class="fa-solid fa-paper-plane text-sm"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Slide-over CRM & Backend API Inspector Drawer -->
+    <div id="crm-drawer" class="fixed inset-0 z-50 hidden">
+        <div onclick="toggleCrmDrawer()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity"></div>
+        <div class="fixed inset-y-0 right-0 max-w-lg w-full bg-white shadow-2xl border-l border-slate-200 flex flex-col z-10">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold text-base flex items-center">
+                        <i class="fa-solid fa-server text-teal-400 mr-2"></i> CRM Lead & Backend API Logs
+                    </h3>
+                    <p class="text-xs text-slate-400">Real-time simulation of Section 14 & 18 integrations</p>
+                </div>
+                <button onclick="toggleCrmDrawer()" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar text-xs">
+                <!-- Live CRM Record -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-slate-800 uppercase tracking-wider">Captured CRM Lead Payload</span>
+                        <span id="crm-status-pill" class="px-2.5 py-0.5 rounded-full font-semibold bg-amber-100 text-amber-800">New Lead</span>
+                    </div>
+                    <pre id="crm-json" class="bg-slate-900 text-emerald-400 p-4 rounded-2xl overflow-x-auto font-mono text-[11px] leading-relaxed shadow-inner"></pre>
+                </div>
+
+                <!-- Backend API Execution Log -->
+                <div>
+                    <span class="font-bold text-slate-800 uppercase tracking-wider block mb-2">Backend Function Calls (Section 18)</span>
+                    <div id="api-logs" class="space-y-2 max-h-64 overflow-y-auto custom-scrollbar">
+                        <div class="text-slate-400 italic">No API calls triggered yet.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // 1. CLINIC KNOWLEDGE BASE & CONFIGURATION (Sections 2, 6, 8, 12)
+        // =========================================================================
+        const CLINIC_CONFIG = {
+            name: "Clove Dental",
+            branch: "Noida Sector 143",
+            fullTitle: "Clove Dental – Noida Sector 143",
+            address: "GS 02, Group Housing Plot No GH 01B, Sector 143, Gautam Budh Nagar, Noida, Uttar Pradesh, India.",
+            phone: "+91 9667353232",
+            hours: "11:00 AM to 7:00 PM",
+            weeklyOffDay: 1, // Monday (0 = Sunday, 1 = Monday)
+            weeklyOffName: "Monday",
+            website: "https://clovedental.in/dentist-near-me/noida/noida-sector-143",
+            bookingPage: "https://clovedental.in/appointments/",
+            mapsUrl: "https://www.google.com/maps/search/?api=1&query=Clove+Dental+GS+02+Group+Housing+Plot+No+GH+01B+Sector+143+Noida"
+        };
+
+        const TREATMENTS_INFO = {
+            "Root Canal Treatment (RCT)": "Root Canal Treatment (RCT) may be recommended by a dentist when the inner pulp of a tooth is infected or damaged, helping save your natural tooth. A dentist will examine your tooth first to confirm if RCT is needed.",
+            "Dental Implants": "Dental implants are one of the options for replacing missing teeth with a natural look and feel. A dentist must assess your bone health and suitability during a consultation.",
+            "Dental Braces": "We offer orthodontic consultations for traditional dental braces to help correct misaligned or crooked teeth.",
+            "Invisible Aligners": "Clear aligners are removable, transparent orthodontic appliances used for selected teeth-alignment cases. An orthodontist can check if you are a good candidate.",
+            "Teeth Cleaning and Scaling": "Professional teeth cleaning and scaling helps remove plaque, tartar, and hardened deposits to maintain healthy gums and fresh breath.",
+            "Dental Fillings": "Dental fillings are used to restore teeth affected by cavities or minor tooth damage.",
+            "Tooth Extraction": "Tooth extraction may be recommended when a tooth is severely damaged, impacted (such as wisdom teeth), or cannot be suitably preserved.",
+            "Dental Crowns": "Dental crowns are custom-made caps that cover and protect damaged, weakened, or root-canal-treated teeth.",
+            "Pediatric Dentistry": "We provide gentle dental consultations and preventive care tailored specifically for children.",
+            "General Dental Consultation": "A routine dental check-up includes an oral examination and professional advice from our dentist."
+        };
+
+        const EMERGENCY_KEYWORDS = [
+            "severe toothache", "unbearable pain", "extreme pain", "swelling", "facial swelling",
+            "gum swelling", "trauma", "accident", "knocked out", "uncontrolled bleeding",
+            "bleeding won't stop", "fever", "difficulty swallowing", "difficulty breathing", "pus"
+        ];
+
+        // =========================================================================
+        // 2. STATE MANAGEMENT & CRM RECORD (Section 14)
+        // =========================================================================
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        let chatState = {
+            mode: "IDLE", // IDLE, BOOKING, PROBLEM_TRIAGE, RESCHEDULE, CANCEL, HANDOVER
+            bookingStep: 0,
+            problemStep: 0,
+            currentProblem: null,
+            otpCode: null,
+            otpVerified: false,
+            consentGiven: false,
+            promotionalConsent: false,
+            confirmedBookings: [
+                // Pre-seeded sample booking so users can also test Reschedule/Cancel immediately
+                {
+                    bookingId: "CLV-143-8842",
+                    patientName: "Rahul Sharma",
+                    mobile: "9876543210",
+                    age: "34",
+                    patientType: "Myself",
+                    treatment: "General Dental Check-up",
+                    date: getNextValidDateStr(2),
+                    time: "11:30 AM",
+                    status: "Confirmed"
+                }
+            ]
+        };
+
+        let crmLead = {
+            leadId: "LD-" + Math.floor(100000 + Math.random() * 900000),
+            patientName: "",
+            mobileNumber: "",
+            emailAddress: "",
+            age: "",
+            patientType: "",
+            existingPatient: "",
+            dentalConcern: "",
+            treatmentInterestedIn: "",
+            preferredAppointmentDate: "",
+            preferredTime: "",
+            clinicBranch: "Clove Dental – Noida Sector 143",
+            bookingStatus: "New Lead",
+            bookingReference: "",
+            leadSource: "Website Chatbot Widget",
+            campaignSource: urlParams.get("campaign") || "Direct",
+            utmSource: urlParams.get("utm_source") || "organic",
+            utmMedium: urlParams.get("utm_medium") || "web",
+            utmCampaign: urlParams.get("utm_campaign") || "sector143_local",
+            conversationDate: new Date().toISOString(),
+            conversationSummary: "Visitor opened chat widget.",
+            patientConsentStatus: "Pending"
+        };
+
+        // =========================================================================
+        // 3. MOCK BACKEND INTEGRATION FUNCTIONS (Section 18)
+        // =========================================================================
+        const BackendAPI = {
+            log(fnName, params, response) {
+                const container = document.getElementById("api-logs");
+                if (container.querySelector(".italic")) container.innerHTML = "";
+                const entry = document.createElement("div");
+                entry.className = "p-2.5 rounded-xl bg-slate-50 border border-slate-200 font-mono text-[11px]";
+                entry.innerHTML = `
+                    <div class="flex justify-between text-teal-700 font-bold">
+                        <span>ƒ ${fnName}()</span>
+                        <span class="text-slate-400 font-normal">${new Date().toLocaleTimeString()}</span>
+                    </div>
+                    <div class="text-slate-500 mt-0.5 truncate">In: ${JSON.stringify(params)}</div>
+                    <div class="text-emerald-700 mt-0.5">Out: ${JSON.stringify(response)}</div>
+                `;
+                container.prepend(entry);
+            },
+
+            get_clinic_details() {
+                this.log("get_clinic_details", {}, { branch: CLINIC_CONFIG.branch, status: "Open Tue-Sun" });
+                return CLINIC_CONFIG;
+            },
+
+            get_treatment_information(treatmentName) {
+                const info = TREATMENTS_INFO[treatmentName] || null;
+                this.log("get_treatment_information", { treatmentName }, { found: !!info });
+                return info;
+            },
+
+            check_available_slots(dateStr, treatment) {
+                // Generate genuine slots within 11:00 AM - 7:00 PM
+                const allSlots = [
+                    "11:00 AM", "11:30 AM", "12:15 PM", "01:00 PM",
+                    "02:30 PM", "03:15 PM", "04:00 PM", "05:00 PM", "05:45 PM", "06:30 PM"
+                ];
+                // Deterministically filter a couple slots based on date so it feels realistic
+                const dayNum = new Date(dateStr).getDate() || 1;
+                const available = allSlots.filter((_, idx) => (idx + dayNum) % 4 !== 0);
+                this.log("check_available_slots", { date: dateStr, treatment, clinic: "Noida Sector 143" }, { availableCount: available.length });
+                return available;
+            },
+
+            send_otp(mobileNumber) {
+                const generatedOtp = String(Math.floor(1000 + Math.random() * 9000));
+                chatState.otpCode = generatedOtp;
+                this.log("send_otp", { mobile_number: maskMobile(mobileNumber) }, { sent: true, demo_otp: generatedOtp });
+                return { success: true, demoOtp: generatedOtp };
+            },
+
+            verify_otp(mobileNumber, enteredOtp) {
+                const valid = String(enteredOtp).trim() === String(chatState.otpCode);
+                this.log("verify_otp", { mobile_number: maskMobile(mobileNumber), otp: "****" }, { verified: valid });
+                return valid;
+            },
+
+            create_appointment(patientDetails, slot) {
+                const ref = "CLV-143-" + Math.floor(1000 + Math.random() * 9000);
+                const record = {
+                    bookingId: ref,
+                    patientName: patientDetails.patientName,
+                    mobile: patientDetails.mobileNumber,
+                    age: patientDetails.age,
+                    patientType: patientDetails.patientType,
+                    treatment: patientDetails.treatmentInterestedIn,
+                    date: slot.date,
+                    time: slot.time,
+                    email: patientDetails.emailAddress,
+                    status: "Confirmed"
+                };
+                chatState.confirmedBookings.push(record);
+                this.log("create_appointment", { patient: patientDetails.patientName, slot }, { confirmed: true, booking_id: ref });
+                return { success: true, bookingId: ref, record };
+            },
+
+            get_appointment(identifier) {
+                const clean = identifier.replace(/\D/g, "");
+                const found = chatState.confirmedBookings.find(
+                    b => b.bookingId.toLowerCase() === identifier.trim().toLowerCase() || (clean.length >= 10 && b.mobile.endsWith(clean.slice(-10)))
+                );
+                this.log("get_appointment", { query: identifier }, { found: !!found });
+                return found || null;
+            },
+
+            reschedule_appointment(bookingId, newSlot) {
+                const booking = chatState.confirmedBookings.find(b => b.bookingId === bookingId);
+                if (!booking) return { success: false };
+                booking.date = newSlot.date;
+                booking.time = newSlot.time;
+                booking.status = "Rescheduled";
+                this.log("reschedule_appointment", { bookingId, newSlot }, { success: true });
+                return { success: true, booking };
+            },
+
+            cancel_appointment(bookingId, reason) {
+                const booking = chatState.confirmedBookings.find(b => b.bookingId === bookingId);
+                if (!booking) return { success: false };
+                booking.status = "Cancelled";
+                booking.cancelReason = reason || "Not specified";
+                this.log("cancel_appointment", { bookingId }, { cancelled: true });
+                return { success: true, booking };
+            },
+
+            save_lead(updatedFields = {}) {
+                Object.assign(crmLead, updatedFields);
+                document.getElementById("crm-json").textContent = JSON.stringify({
+                    ...crmLead,
+                    mobileNumber: crmLead.mobileNumber ? maskMobile(crmLead.mobileNumber) : ""
+                }, null, 2);
+                const pill = document.getElementById("crm-status-pill");
+                pill.textContent = crmLead.bookingStatus;
+                this.log("save_lead", { status: crmLead.bookingStatus }, { leadId: crmLead.leadId, saved: true });
+            },
+
+            transfer_to_agent(summary) {
+                this.log("transfer_to_agent", { leadId: crmLead.leadId }, { queued: true, clinicPhone: CLINIC_CONFIG.phone });
+                return { queued: true };
+            }
+        };
+
+        // =========================================================================
+        // 4. HELPER UTILITIES
+        // =========================================================================
+        function maskMobile(num) {
+            const digits = String(num).replace(/\D/g, "").slice(-10);
+            if (digits.length < 10) return num;
+            return `+91 ${digits.slice(0, 2)}XXXX${digits.slice(6)}`;
+        }
+
+        function validateIndianMobile(input) {
+            const cleaned = input.replace(/[\s\-()]/g, "");
+            const match = cleaned.match(/^(?:\+91|91|0)?([6-9]\d{9})$/);
+            return match ? match[1] : null;
+        }
+
+        function getNextValidDateStr(daysAhead = 1) {
+            const d = new Date();
+            d.setDate(d.getDate() + daysAhead);
+            if (d.getDay() === 1) d.setDate(d.getDate() + 1); // Skip Monday
+            return d.toISOString().split("T")[0];
+        }
+
+        function formatReadableDate(dateStr) {
+            const [y, m, d] = dateStr.split("-").map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return dateObj.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+        }
+
+        function isMonday(dateStr) {
+            const [y, m, d] = dateStr.split("-").map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            return dateObj.getDay() === 1;
+        }
+
+        function isPastDate(dateStr) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const [y, m, d] = dateStr.split("-").map(Number);
+            const selected = new Date(y, m - 1, d);
+            return selected < today;
+        }
+
+        // =========================================================================
+        // 5. UI RENDERING ENGINE
+        // =========================================================================
+        const messagesEl = document.getElementById("chat-messages");
+        const interactiveEl = document.getElementById("interactive-area");
+
+        function scrollToBottom() {
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function addBotMessage(text, options = [], customHtml = "") {
+            const wrapper = document.createElement("div");
+            wrapper.className = "flex items-start space-x-2.5 msg-animate";
+
+            const formattedText = text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>');
+
+            wrapper.innerHTML = `
+                <div class="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center text-xs shrink-0 mt-0.5 shadow-xs">
+                    <i class="fa-solid fa-tooth"></i>
+                </div>
+                <div class="max-w-[85%] space-y-2">
+                    <div class="bg-white border border-slate-200/90 text-slate-800 text-sm px-4 py-3 rounded-2xl rounded-tl-sm shadow-xs leading-relaxed">
+                        ${formattedText}
+                        ${customHtml}
+                    </div>
+                </div>
+            `;
+            messagesEl.appendChild(wrapper);
+            renderQuickReplies(options);
+            scrollToBottom();
+        }
+
+        function addUserMessage(text) {
+            const wrapper = document.createElement("div");
+            wrapper.className = "flex justify-end msg-animate";
+            wrapper.innerHTML = `
+                <div class="max-w-[82%] bg-teal-600 text-white text-sm px-4 py-2.5 rounded-2xl rounded-tr-sm shadow-xs leading-relaxed">
+                    ${escapeHtml(text)}
+                </div>
+            `;
+            messagesEl.appendChild(wrapper);
+            interactiveEl.innerHTML = "";
+            scrollToBottom();
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement("div");
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showTypingThen(callback, delay = 420) {
+            const typingId = "typing-" + Date.now();
+            const wrapper = document.createElement("div");
+            wrapper.id = typingId;
+            wrapper.className = "flex items-center space-x-2.5 msg-animate";
+            wrapper.innerHTML = `
+                <div class="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center text-xs shrink-0">
+                    <i class="fa-solid fa-tooth"></i>
+                </div>
+                <div class="bg-white border border-slate-200 px-4 py-3 rounded-2xl rounded-tl-sm flex space-x-1.5">
+                    <span class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></span>
+                    <span class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></span>
+                    <span class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></span>
+                </div>
+            `;
+            messagesEl.appendChild(wrapper);
+            scrollToBottom();
+
+            setTimeout(() => {
+                const el = document.getElementById(typingId);
+                if (el) el.remove();
+                callback();
+            }, delay);
+        }
+
+        function renderQuickReplies(options) {
+            interactiveEl.innerHTML = "";
+            if (!options || options.length === 0) return;
+
+            const container = document.createElement("div");
+            container.className = "flex flex-wrap gap-2 py-1";
+
+            options.forEach(opt => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                const label = typeof opt === "string" ? opt : opt.label;
+                const value = typeof opt === "string" ? opt : opt.value;
+                const style = (typeof opt === "object" && opt.primary)
+                    ? "bg-teal-600 text-white border-teal-600 hover:bg-teal-700"
+                    : (typeof opt === "object" && opt.danger)
+                    ? "bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100"
+                    : "bg-teal-50/70 text-teal-800 border-teal-200 hover:bg-teal-100";
+
+                btn.className = `text-xs font-medium px-3.5 py-2 rounded-xl border transition active:scale-95 ${style}`;
+                btn.textContent = label;
+                btn.onclick = () => processInput(value, label);
+                container.appendChild(btn);
+            });
+
+            interactiveEl.appendChild(container);
+        }
+
+        function renderInteractiveDatePicker(onSelectCallback) {
+            interactiveEl.innerHTML = "";
+            const todayStr = new Date().toISOString().split("T")[0];
+            const suggestedStr = getNextValidDateStr(1);
+
+            const box = document.createElement("div");
+            box.className = "p-2 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2";
+            box.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fa-regular fa-calendar text-teal-600 ml-1"></i>
+                    <input type="date" id="slot-date-input" min="${todayStr}" value="${suggestedStr}"
+                        class="text-xs font-medium bg-white border border-slate-300 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    <span class="text-[11px] text-rose-600 font-medium">(Closed Mondays)</span>
+                </div>
+                <button type="button" id="confirm-date-btn" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition">
+                    Check Slots
+                </button>
+            `;
+            interactiveEl.appendChild(box);
+
+            document.getElementById("confirm-date-btn").onclick = () => {
+                const val = document.getElementById("slot-date-input").value;
+                if (!val) return;
+                onSelectCallback(val);
+            };
+        }
+
+        // =========================================================================
+        // 6. INITIAL GREETING & MAIN ROUTER (Section 4)
+        // =========================================================================
+        const MAIN_MENU_OPTIONS = [
+            { label: "1. Book an Appointment", value: "Book an Appointment", primary: true },
+            { label: "2. I Have a Dental Problem", value: "I Have a Dental Problem" },
+            { label: "3. Explore Dental Treatments", value: "Explore Dental Treatments" },
+            { label: "4. Consultation & Treatment Fees", value: "Consultation & Treatment Fees" },
+            { label: "5. Clinic Location & Timings", value: "Clinic Location & Timings" },
+            { label: "6. Talk to Our Team", value: "Talk to Our Team" }
+        ];
+
+        function initChatbot() {
+            messagesEl.innerHTML = "";
+            BackendAPI.save_lead();
+            addBotMessage(
+                "Hello! 👋 Welcome to Clove Dental, Noida Sector 143.\nI'm your virtual dental assistant. I can help you find the right dental treatment, answer your questions, and book an appointment with our dental team.\n\nHow can I help you today?",
+                MAIN_MENU_OPTIONS
+            );
+        }
+
+        function handleUserSubmit(e) {
+            e.preventDefault();
+            const inputEl = document.getElementById("user-input");
+            const text = inputEl.value.trim();
+            if (!text) return;
+            inputEl.value = "";
+            processInput(text, text);
+        }
+
+        function triggerQuickAction(action) {
+            if (action === "Emergency Test") {
+                processInput("I have severe toothache and facial swelling", "I have severe toothache and facial swelling");
+            } else if (action === "Reschedule / Cancel") {
+                processInput("Reschedule or Cancel Appointment", "Reschedule or Cancel Appointment");
+            } else {
+                processInput(action, action);
+            }
+        }
+
+        function resetConversation() {
+            chatState.mode = "IDLE";
+            chatState.bookingStep = 0;
+            chatState.problemStep = 0;
+            chatState.currentProblem = null;
+            chatState.otpVerified = false;
+            chatState.consentGiven = false;
+            crmLead.leadId = "LD-" + Math.floor(100000 + Math.random() * 900000);
+            crmLead.bookingStatus = "New Lead";
+            crmLead.patientName = "";
+            crmLead.mobileNumber = "";
+            crmLead.emailAddress = "";
+            crmLead.age = "";
+            crmLead.patientType = "";
+            crmLead.existingPatient = "";
+            crmLead.dentalConcern = "";
+            crmLead.treatmentInterestedIn = "";
+            crmLead.preferredAppointmentDate = "";
+            crmLead.preferredTime = "";
+            crmLead.bookingReference = "";
+            crmLead.patientConsentStatus = "Pending";
+            initChatbot();
+        }
+
+        // =========================================================================
+        // 7. CORE CONVERSATIONAL BRAIN
+        // =========================================================================
+        function processInput(rawValue, displayLabel) {
+            addUserMessage(displayLabel || rawValue);
+            const text = rawValue.trim();
+            const lower = text.toLowerCase();
+
+            // 1. PRIORITY CHECK: EMERGENCY DETECTION (Section 9)
+            if (EMERGENCY_KEYWORDS.some(kw => lower.includes(kw))) {
+                chatState.mode = "IDLE";
+                BackendAPI.save_lead({
+                    dentalConcern: text,
+                    bookingStatus: "Follow-up Required",
+                    conversationSummary: "Emergency symptoms reported; escalated to clinic phone."
+                });
+                showTypingThen(() => {
+                    addBotMessage(
+                        "I'm sorry you're experiencing this discomfort.\nI'd recommend getting professional dental attention as soon as possible.\n\nPlease contact Clove Dental at **+91 9667353232** so the team can guide you regarding an urgent consultation.\n\n⚠️ *If you have difficulty breathing or swallowing, rapidly increasing facial or neck swelling, or uncontrolled bleeding, please seek emergency medical care immediately.*",
+                        [
+                            { label: "📞 Call +91 9667353232", value: "Call Clinic", danger: true },
+                            { label: "Connect with Support Team", value: "Talk to Our Team" },
+                            { label: "Main Menu", value: "Main Menu" }
+                        ]
+                    );
+                });
+                return;
+            }
+
+            // Global Navigation Commands
+            if (lower === "main menu" || lower === "cancel booking" || lower === "start over") {
+                if (lower === "cancel booking") {
+                    BackendAPI.save_lead({ bookingStatus: "Lost Lead" });
+                }
+                chatState.mode = "IDLE";
+                chatState.bookingStep = 0;
+                showTypingThen(() => {
+                    addBotMessage("No problem at all! How else can I assist you today?", MAIN_MENU_OPTIONS);
+                });
+                return;
+            }
+
+            if (lower === "call clinic") {
+                window.location.href = "tel:+919667353232";
+                showTypingThen(() => {
+                    addBotMessage("You can reach our Noida Sector 143 clinic directly at **+91 9667353232** (Tuesday to Sunday, 11:00 AM – 7:00 PM).", MAIN_MENU_OPTIONS);
+                });
+                return;
+            }
+
+            // 2. ACTIVE WORKFLOW ROUTING
+            if (chatState.mode === "BOOKING") {
+                handleBookingFlow(text);
+                return;
+            }
+            if (chatState.mode === "PROBLEM_TRIAGE") {
+                handleProblemTriageFlow(text);
+                return;
+            }
+            if (chatState.mode === "RESCHEDULE") {
+                handleRescheduleFlow(text);
+                return;
+            }
+            if (chatState.mode === "CANCEL") {
+                handleCancelFlow(text);
+                return;
+            }
+            if (chatState.mode === "HANDOVER") {
+                handleHandoverFlow(text);
+                return;
+            }
+
+            // 3. INTENT RECOGNITION FROM IDLE STATE
+            // Hindi / Hinglish Support (Section 3.5)
+            if (lower.includes("hindi") || lower.includes("hinglish") || lower.includes("namaste") || lower.includes("baat")) {
+                showTypingThen(() => {
+                    addBotMessage(
+                        "Namaste! 🙏 Main Clove Dental, Noida Sector 143 ka virtual assistant hoon. Main aapki appointment book karne, treatments samjhane, ya clinic timings batane mein madad kar sakta hoon.\n\nAap kya karna chahenge?",
+                        [
+                            { label: "Appointment Book Karein", value: "Book an Appointment", primary: true },
+                            { label: "Dental Problem Batayein", value: "I Have a Dental Problem" },
+                            { label: "Clinic Address & Timings", value: "Clinic Location & Timings" }
+                        ]
+                    );
+                });
+                return;
+            }
+
+            // Book Appointment Intent
+            if (lower.includes("book") || lower === "1") {
+                startBookingFlow();
+                return;
+            }
+
+            // Dental Problem Intent
+            if (lower.includes("problem") || lower.includes("pain") || lower.includes("ache") || lower.includes("bleeding") || lower === "2") {
+                startProblemTriage();
+                return;
+            }
+
+            // Explore Treatments Intent
+            if (lower.includes("treatment") || lower.includes("service") || lower === "3") {
+                showTypingThen(() => {
+                    addBotMessage(
+                        "We offer comprehensive dental consultations and treatments at Clove Dental, Noida Sector 143. Which treatment would you like to know more about?",
+                        [
+                            "Root Canal Treatment (RCT)",
+                            "Dental Implants",
+                            "Invisible Aligners",
+                            "Dental Braces",
+                            "Teeth Cleaning and Scaling",
+                            "Dental Fillings",
+                            "Dental Crowns",
+                            "Tooth Extraction",
+                            "Pediatric Dentistry",
+                            "General Dental Consultation"
+                        ]
+                    );
+                });
+                return;
+            }
+
+            // Specific Treatment Info Lookup (Section 6)
+            const matchedTreatment = Object.keys(TREATMENTS_INFO).find(t => lower.includes(t.toLowerCase()) || t.toLowerCase().includes(lower));
+            if (matchedTreatment && lower.length > 3) {
+                const info = BackendAPI.get_treatment_information(matchedTreatment);
+                BackendAPI.save_lead({ treatmentInterestedIn: matchedTreatment, bookingStatus: "Qualified Lead" });
+                showTypingThen(() => {
+                    addBotMessage(
+                        `**${matchedTreatment}**\n${info}\n\nWould you like to schedule a consultation with our dentist for a proper examination?`,
+                        [
+                            { label: "Book Consultation", value: "Book an Appointment", primary: true },
+                            { label: "Explore Other Treatments", value: "Explore Dental Treatments" },
+                            { label: "Main Menu", value: "Main Menu" }
+                        ]
+                    );
+                });
+                return;
+            }
+
+            // Pricing & Fees Intent (Section 8)
+            if (lower.includes("fee") || lower.includes("price") || lower.includes("cost") || lower.includes("charge") || lower === "4") {
+                showTypingThen(() => {
+                    addBotMessage(
+                        "Treatment costs can vary depending on your dental condition and the treatment required.\n\nOur dentist can examine your teeth and explain the appropriate treatment options and exact charges before starting any procedure.\n\nWould you like me to help you book a consultation or connect you with our clinic team?",
+                        [
+                            { label: "Book a Consultation", value: "Book an Appointment", primary: true },
+                            { label: "Talk to Clinic Team", value: "Talk to Our Team" },
+                            { label: "Main Menu", value: "Main Menu" }
+                        ]
+                    );
+                });
+                return;
+            }
+
+            // Location & Timings Intent (Section 2 & 12)
+            if (lower.includes("location") || lower.includes("address") || lower.includes("timing") || lower.includes("where") || lower.includes("direction") || lower === "5") {
+                BackendAPI.get_clinic_details();
+                showTypingThen(() => {
+                    addBotMessage(
+                        "**Clove Dental – Noida Sector 143**\n📍 GS 02, Group Housing Plot No GH 01B,\nSector 143, Gautam Budh Nagar,\nNoida, Uttar Pradesh.\n\n🕒 **Operating Hours:** 11:00 AM to 7:00 PM\n🚫 **Weekly Off:** Monday\n📞 **Phone:** +91 9667353232\n\nWould you like directions to the clinic or to book an appointment?",
+                        [
+                            { label: "Book an Appointment", value: "Book an Appointment", primary: true },
+                            { label: "Main Menu", value: "Main Menu" }
+                        ],
+                        `<div class="mt-2.5 pt-2 border-t border-slate-100">
+                            <a href="${CLINIC_CONFIG.mapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 text-xs font-semibold text-teal-700 hover:text-teal-800">
+                                <i class="fa-solid fa-diamond-turn-right"></i>
+                                <span>Open Google Maps Directions</span>
+                            </a>
+                        </div>`
+                    );
+                });
+                return;
+            }
+
+            // Reschedule or Cancel Intent (Sections 10 & 11)
+            if (lower.includes("reschedule")) {
+                startRescheduleFlow();
+                return;
+            }
+            if (lower.includes("cancel")) {
+                startCancelFlow();
+                return;
+            }
+            if (lower.includes("manage booking")) {
+                showTypingThen(() => {
+                    addBotMessage(
+                        "Would you like to reschedule an existing appointment or cancel it?",
+                        [
+                            { label: "Reschedule Appointment", value: "Reschedule Appointment", primary: true },
+                            { label: "Cancel Appointment", value: "Cancel Appointment", danger: true },
+                            { label: "Main Menu", value: "Main Menu" }
+                        ]
+                    );
+                });
+                return;
+            }
+
+            // Human Handover Intent (Section 13)
+            if (lower.includes("talk to") || lower.includes("human") || lower.includes("agent") || lower.includes("team") || lower === "6") {
+                startHandoverFlow();
+                return;
+            }
+
+            // Fallback Conversational Response
+            showTypingThen(() => {
+                addBotMessage(
+                    "I'd be happy to help you with that! To make sure I guide you properly, please choose one of the options below or let me know if you'd like to book a dental consultation.",
+                    MAIN_MENU_OPTIONS
+                );
+            });
+        }
+
+        // =========================================================================
+        // 8. DENTAL PROBLEM TRIAGE WORKFLOW (Section 5)
+        // =========================================================================
+        const DENTAL_PROBLEMS = [
+            "Toothache / Severe Tooth Pain", "Bleeding Gums", "Tooth Sensitivity",
+            "Broken or Chipped Tooth", "Missing Teeth", "Crooked or Misaligned Teeth",
+            "Yellow Teeth / Teeth Staining", "Wisdom Tooth Pain", "Dental Cavities",
+            "Mouth Ulcers", "Dental Swelling", "Routine Dental Check-up", "Other"
+        ];
+
+        function startProblemTriage() {
+            chatState.mode = "PROBLEM_TRIAGE";
+            chatState.problemStep = 1;
+            showTypingThen(() => {
+                addBotMessage("What dental concern are you experiencing?", DENTAL_PROBLEMS);
+            });
+        }
+
+        function handleProblemTriageFlow(text) {
+            const lower = text.toLowerCase();
+
+            if (chatState.problemStep === 1) {
+                chatState.currentProblem = text;
+                BackendAPI.save_lead({
+                    dentalConcern: text,
+                    bookingStatus: "Qualified Lead",
+                    conversationSummary: `Patient reported concern: ${text}`
+                });
+
+                // Check if user selected Severe Tooth Pain or Dental Swelling
+                if (lower.includes("severe") || lower.includes("swelling")) {
+                    chatState.mode = "IDLE";
+                    showTypingThen(() => {
+                        addBotMessage(
+                            "I'm sorry you're experiencing this discomfort.\nI'd recommend getting professional dental attention as soon as possible.\n\nPlease contact Clove Dental at **+91 9667353232** so the team can guide you regarding an urgent consultation.\n\nIf you have difficulty breathing or swallowing, rapidly increasing facial or neck swelling, or uncontrolled bleeding, please seek emergency medical care immediately.",
+                            [
+                                { label: "📞 Call +91 9667353232", value: "Call Clinic", danger: true },
+                                { label: "Book Urgent Consultation", value: "Book an Appointment", primary: true }
+                            ]
+                        );
+                    });
+                    return;
+                }
+
+                chatState.problemStep = 2;
+                showTypingThen(() => {
+                    if (lower.includes("toothache") || lower.includes("wisdom")) {
+                        addBotMessage("I understand how uncomfortable tooth pain can be. How long have you been experiencing this pain?", [
+                            "Just started today", "2–3 days", "More than a week"
+                        ]);
+                    } else if (lower.includes("missing")) {
+                        addBotMessage("How many teeth are missing, and are you interested in exploring options like dental implants or bridges?", [
+                            "1 tooth missing", "Multiple teeth missing", "Not sure, need dentist advice"
+                        ]);
+                    } else if (lower.includes("crooked") || lower.includes("misaligned")) {
+                        addBotMessage("Are you interested in traditional braces or invisible aligners, and is this for an adult or a child?", [
+                            "Invisible Aligners (Adult)", "Traditional Braces", "Consultation for a Child"
+                        ]);
+                    } else if (lower.includes("bleeding")) {
+                        addBotMessage("Do your gums bleed mainly while brushing, or are you also experiencing discomfort?", [
+                            "While brushing", "Ongoing discomfort", "Not sure"
+                        ]);
+                    } else {
+                        chatState.problemStep = 3;
+                        addBotMessage(
+                            `Thank you for sharing that. A dentist will need to examine your teeth to advise the right care for **${text}**.\n\nWould you like to book a consultation at our Noida Sector 143 clinic?`,
+                            [
+                                { label: "Yes, Book Consultation", value: "Book an Appointment", primary: true },
+                                { label: "Not right now", value: "Hesitant" }
+                            ]
+                        );
+                    }
+                });
+                return;
+            }
+
+            if (chatState.problemStep === 2) {
+                chatState.problemStep = 3;
+                BackendAPI.save_lead({
+                    conversationSummary: `Concern: ${chatState.currentProblem} | Details: ${text}`
+                });
+                showTypingThen(() => {
+                    addBotMessage(
+                        "Thank you for letting me know. Our dentist can examine this carefully and guide you on the most suitable treatment.\n\nWould you like me to check available appointment slots for you?",
+                        [
+                            { label: "Yes, Schedule Consultation", value: "Book an Appointment", primary: true },
+                            { label: "Explore Treatments First", value: "Hesitant" }
+                        ]
+                    );
+                });
+                return;
+            }
+
+            if (chatState.problemStep === 3) {
+                chatState.mode = "IDLE";
+                if (lower.includes("yes") || lower.includes("book") || lower.includes("schedule")) {
+                    startBookingFlow(chatState.currentProblem);
+                } else {
+                    // Section 17: Non-pushy response for hesitant visitors
+                    showTypingThen(() => {
+                        addBotMessage(
+                            "That's absolutely fine! You can explore our dental services first. Whenever you're ready, I'll be happy to help you schedule a consultation.",
+                            MAIN_MENU_OPTIONS
+                        );
+                    });
+                }
+            }
+        }
+
+        // =========================================================================
+        // 9. 12-STEP APPOINTMENT BOOKING WORKFLOW (Sections 7 & 15)
+        // =========================================================================
+        function startBookingFlow(preselectedConcern = "") {
+            chatState.mode = "BOOKING";
+            chatState.bookingStep = 1;
+            if (preselectedConcern) {
+                crmLead.dentalConcern = preselectedConcern;
+            }
+            BackendAPI.save_lead({ bookingStatus: "Appointment Requested" });
+
+            showTypingThen(() => {
+                // Section 15: Data Privacy & Consent Notice before collecting personal details
+                addBotMessage(
+                    "I'd be glad to help you book your visit at **Clove Dental, Noida Sector 143**.\n\n🔒 *Privacy Note: Your details will be used strictly to coordinate your requested dental appointment and send booking updates.*\n\n**Step 1:** Is this appointment for yourself or someone else?",
+                    ["Myself", "Family Member", "Child"]
+                );
+            });
+        }
+
+        function handleBookingFlow(text) {
+            const lower = text.toLowerCase();
+
+            switch (chatState.bookingStep) {
+                // STEP 1: PATIENT TYPE
+                case 1: {
+                    let pType = "Myself";
+                    if (lower.includes("family")) pType = "Family Member";
+                    else if (lower.includes("child")) pType = "Child";
+                    
+                    crmLead.patientType = pType;
+                    crmLead.patientConsentStatus = "Appointment Processing Consented";
+                    BackendAPI.save_lead();
+
+                    chatState.bookingStep = 2;
+                    showTypingThen(() => {
+                        addBotMessage("May I know the patient's full name?");
+                    });
+                    break;
+                }
+
+                // STEP 2: PATIENT NAME
+                case 2: {
+                    if (text.length < 2) {
+                        showTypingThen(() => addBotMessage("Please enter a valid full name so we can register the appointment."));
+                        return;
+                    }
+                    crmLead.patientName = text;
+                    const firstName = text.split(" ")[0];
+                    BackendAPI.save_lead();
+
+                    chatState.bookingStep = 3;
+                    showTypingThen(() => {
+                        addBotMessage(`Thank you, ${firstName}! Please share your 10-digit mobile number so our clinic team can coordinate your appointment.`);
+                    });
+                    break;
+                }
+
+                // STEP 3: MOBILE NUMBER + TRIGGER OTP
+                case 3: {
+                    const validMobile = validateIndianMobile(text);
+                    if (!validMobile) {
+                        showTypingThen(() => {
+                            addBotMessage("That doesn't seem to be a valid 10-digit Indian mobile number. Please enter a valid 10-digit number (with or without +91).");
+                        });
+                        return;
+                    }
+                    crmLead.mobileNumber = validMobile;
+                    const otpRes = BackendAPI.send_otp(validMobile);
+                    BackendAPI.save_lead();
+
+                    chatState.bookingStep = 4;
+                    showTypingThen(() => {
+                        addBotMessage(
+                            `We've sent a 4-digit verification OTP to **${maskMobile(validMobile)}**.\nPlease enter the OTP below to verify your number.\n\n*(Demo Verification Code: **${otpRes.demoOtp}** — never share OTPs from other services)*`,
+                            [{ label: `Verify with ${otpRes.demoOtp}`, value: otpRes.demoOtp, primary: true }]
+                        );
+                    });
+                    break;
+                }
+
+                // STEP 4: OTP VERIFICATION
+                case 4: {
+                    const isVerified = BackendAPI.verify_otp(crmLead.mobileNumber, text);
+                    if (!isVerified) {
+                        showTypingThen(() => {
+                            addBotMessage(
+                                "The OTP entered did not match. Please try again or request a new OTP.",
+                                [{ label: "Resend OTP", value: "RESEND_OTP" }]
+                            );
+                        });
+                        return;
+                    }
+                    if (text === "RESEND_OTP") {
+                        const resend = BackendAPI.send_otp(crmLead.mobileNumber);
+                        showTypingThen(() => {
+                            addBotMessage(`A new OTP has been sent! *(Demo Code: **${resend.demoOtp}**)*`);
+                        });
+                        return;
+                    }
+
+                    chatState.otpVerified = true;
+                    chatState.bookingStep = 5;
+                    const firstName = crmLead.patientName.split(" ")[0];
+                    showTypingThen(() => {
+                        addBotMessage(`Mobile number verified! ✅ What is ${crmLead.patientType === "Myself" ? "your" : firstName + "'s"} age?`);
+                    });
+                    break;
+                }
+
+                // STEP 5: PATIENT AGE
+                case 5: {
+                    const ageNum = parseInt(text.replace(/\D/g, ""), 10);
+                    if (!ageNum || ageNum < 1 || ageNum > 115) {
+                        showTypingThen(() => addBotMessage("Please enter a valid age in years (for example: 28)."));
+                        return;
+                    }
+                    crmLead.age = String(ageNum);
+                    BackendAPI.save_lead();
+
+                    chatState.bookingStep = 6;
+                    showTypingThen(() => {
+                        addBotMessage(
+                            "What dental treatment or consultation are you looking for?",
+                            [
+                                "General Dental Check-up", "Root Canal Treatment", "Dental Implants",
+                                "Braces", "Invisible Aligners", "Teeth Cleaning / Scaling",
+                                "Dental Filling", "Tooth Extraction", "Dental Crowns",
+                                "Gum Treatment", "Pediatric Dentistry", "Other / Not Sure"
+                            ]
+                        );
+                    });
+                    break;
+                }
+
+                // STEP 6: TREATMENT REQUIREMENT
+                case 6: {
+                    crmLead.treatmentInterestedIn = text;
+                    BackendAPI.save_lead();
+
+                    chatState.bookingStep = 7;
+                    showTypingThen(() => {
+                        addBotMessage(
+                            "Have you visited Clove Dental before?",
+                            ["Yes, I'm an existing patient.", "No, this is my first visit."]
+                        );
+                    });
+                    break;
+                }
+
+                // STEP 7: EXISTING PATIENT STATUS
+                case 7: {
+                    crmLead.existingPatient = lower.includes("yes") || lower.includes("existing") ? "Existing Patient" : "New Patient";
+                    BackendAPI.save_lead();
+
+                    chatState.bookingStep = 8;
+                    showTypingThen(() => {
+                        addBotMessage("Which date would you prefer for your dental appointment? *(Please note: Our Noida Sector 143 branch is closed on Mondays)*");
+                        renderInteractiveDatePicker((chosenDate) => {
+                            processInput(chosenDate, formatReadableDate(chosenDate));
+                        });
+                    });
+                    break;
+                }
+
+                // STEP 8: APPOINTMENT DATE
+                case 8: {
+                    // Accept YYYY-MM-DD from date picker or parse typed date
+                    let dateStr = text;
+                    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+                        const parsed = new Date(text);
+                        if (!isNaN(parsed.getTime())) {
+                            dateStr = parsed.toISOString().split("T")[0];
+                        } else {
+                            showTypingThen(() => {
+                                addBotMessage("Please select a valid date using the calendar picker below.");
+                                renderInteractiveDatePicker((chosenDate) => {
+                                    processInput(chosenDate, formatReadableDate(chosenDate));
+                                });
+                            });
+                            return;
+                        }
+                    }
+
+                    if (isPastDate(dateStr)) {
+                        showTypingThen(() => {
+                            addBotMessage("We cannot book dates in the past. Please choose today or an upcoming date.");
+                            renderInteractiveDatePicker((chosenDate) => {
+                                processInput(chosenDate, formatReadableDate(chosenDate));
+                            });
+                        });
+                        return;
+                    }
+
+                    if (isMonday(dateStr)) {
+                        showTypingThen(() => {
+                            addBotMessage("Our Noida Sector 143 clinic has its weekly off on **Mondays**. Please select another day between Tuesday and Sunday.");
+                            renderInteractiveDatePicker((chosenDate) => {
+                                processInput(chosenDate, formatReadableDate(chosenDate));
+                            });
+                        });
+                        return;
+                    }
+
+                    crmLead.preferredAppointmentDate = dateStr;
+                    BackendAPI.save_lead();
+                    const slots = BackendAPI.check_available_slots(dateStr, crmLead.treatmentInterestedIn);
+
+                    chatState.bookingStep = 9;
+                    showTypingThen(() => {
+                        addBotMessage(
+                            `Here are the available appointment slots for **${formatReadableDate(dateStr)}** (Operating Hours: 11:00 AM – 7:00 PM). What time would be convenient for you?`,
+                            slots
+                        );
+                    });
+                    break;
+                }
+
+                // STEP 9: APPOINTMENT TIME
+                case 9: {
+                    crmLead.preferredTime = text;
+                    BackendAPI.save_lead();
+
+                    chatState.bookingStep = 10;
+                    showTypingThen(() => {
+                        addBotMessage(
+                            "Would you like to share your email address for appointment updates? *(Optional)*",
+                            [{ label: "Skip Email", value: "SKIP_EMAIL" }]
+                        );
+                    });
+                    break;
+                }
+
+                // STEP 10: OPTIONAL EMAIL
+                case 10: {
+                    if (text !== "SKIP_EMAIL" && lower !== "skip") {
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(text)) {
+                            showTypingThen(() => {
+                                addBotMessage(
+                                    "Please enter a valid email address (e.g., name@example.com) or click **Skip Email**.",
+                                    [{ label: "Skip Email", value: "SKIP_EMAIL" }]
+                                );
+                            });
+                            return;
+                        }
+                        crmLead.emailAddress = text;
+                    } else {
+                        crmLead.emailAddress = "";
+                    }
+                    BackendAPI.save_lead();
+
+                    // STEP 11: APPOINTMENT SUMMARY
+                    chatState.bookingStep = 11;
+                    const summaryCard = `
+                        <div class="mt-3 p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-1.5">
+                            <div class="flex justify-between"><span class="text-slate-500">Patient Name:</span><span class="font-semibold text-slate-900">${escapeHtml(crmLead.patientName)}</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Mobile Number:</span><span class="font-semibold text-slate-900">${maskMobile(crmLead.mobileNumber)}</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Age / Type:</span><span class="font-semibold text-slate-900">${crmLead.age} yrs (${crmLead.patientType})</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Treatment:</span><span class="font-semibold text-teal-700">${escapeHtml(crmLead.treatmentInterestedIn)}</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Clinic:</span><span class="font-semibold text-slate-900">Clove Dental – Noida Sector 143</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Date & Time:</span><span class="font-semibold text-slate-900">${formatReadableDate(crmLead.preferredAppointmentDate)} at ${escapeHtml(crmLead.preferredTime)}</span></div>
+                            ${crmLead.emailAddress ? `<div class="flex justify-between"><span class="text-slate-500">Email:</span><span class="font-semibold text-slate-900">${escapeHtml(crmLead.emailAddress)}</span></div>` : ""}
+                        </div>
+                    `;
+                    showTypingThen(() => {
+                        addBotMessage(
+                            "Please review your appointment details.\n\nWould you like to confirm this appointment?",
+                            [
+                                { label: "✅ Confirm Appointment", value: "Confirm Appointment", primary: true },
+                                { label: "✏️ Change Details", value: "Change Details" },
+                                { label: "✖️ Cancel Booking", value: "Cancel Booking", danger: true }
+                            ],
+                            summaryCard
+                        );
+                    });
+                    break;
+                }
+
+                // STEP 11 -> STEP 12: CONFIRMATION
+                case 11: {
+                    if (lower.includes("change")) {
+                        chatState.bookingStep = 1;
+                        showTypingThen(() => {
+                            addBotMessage("Sure! Let's update your details. Is this appointment for yourself or someone else?", ["Myself", "Family Member", "Child"]);
+                        });
+                        return;
+                    }
+
+                    if (lower.includes("confirm")) {
+                        const result = BackendAPI.create_appointment(crmLead, {
+                            date: crmLead.preferredAppointmentDate,
+                            time: crmLead.preferredTime
+                        });
+
+                        if (result.success) {
+                            BackendAPI.save_lead({
+                                bookingStatus: "Appointment Confirmed",
+                                bookingReference: result.bookingId,
+                                conversationSummary: `Confirmed booking ${result.bookingId} for ${crmLead.treatmentInterestedIn}.`
+                            });
+                            chatState.mode = "IDLE";
+                            chatState.bookingStep = 0;
+
+                            showTypingThen(() => {
+                                addBotMessage(
+                                    `🎉 Your appointment request has been successfully confirmed!\n\nThank you, **${crmLead.patientName}**.\nHere are your appointment details:\n\n` +
+                                    `🏥 **Clinic:** Clove Dental – Noida Sector 143\n` +
+                                    `📅 **Date:** ${formatReadableDate(crmLead.preferredAppointmentDate)}\n` +
+                                    `⏰ **Time:** ${crmLead.preferredTime}\n` +
+                                    `🦷 **Treatment:** ${crmLead.treatmentInterestedIn}\n` +
+                                    `🔖 **Booking ID:** **${result.bookingId}**\n` +
+                                    `📍 **Address:** GS 02, Group Housing Plot No GH 01B, Sector 143, Gautam Budh Nagar, Noida.\n\n` +
+                                    `For assistance, call **+91 9667353232**.\nWe look forward to welcoming you!`,
+                                    [
+                                        { label: "Get Google Maps Directions", value: "Clinic Location & Timings" },
+                                        { label: "Main Menu", value: "Main Menu" }
+                                    ]
+                                );
+                            });
+                        } else {
+                            BackendAPI.save_lead({ bookingStatus: "Follow-up Required" });
+                            chatState.mode = "IDLE";
+                            showTypingThen(() => {
+                                addBotMessage(
+                                    "Your appointment request is currently pending verification with our scheduling system. Please call **+91 9667353232** or let me connect you with our team for immediate assistance.",
+                                    [{ label: "Talk to Our Team", value: "Talk to Our Team", primary: true }]
+                                );
+                            });
+                        }
+                    } else {
+                        showTypingThen(() => {
+                            addBotMessage("Please choose **Confirm Appointment**, **Change Details**, or **Cancel Booking**.", [
+                                { label: "✅ Confirm Appointment", value: "Confirm Appointment", primary: true },
+                                { label: "✏️ Change Details", value: "Change Details" },
+                                { label: "✖️ Cancel Booking", value: "Cancel Booking", danger: true }
+                            ]);
+                        });
+                    }
+                    break;
+                }
+            }
+        }
+
+        // =========================================================================
+        // 10. RESCHEDULING, CANCELLATION & HUMAN HANDOVER (Sections 10, 11, 13)
+        // =========================================================================
+        let tempActionData = {};
+
+        function startRescheduleFlow() {
+            chatState.mode = "RESCHEDULE";
+            chatState.bookingStep = 1;
+            tempActionData = {};
+            showTypingThen(() => {
+                addBotMessage(
+                    "I can help you reschedule your appointment. Please enter your **registered 10-digit mobile number** or **Booking ID** (e.g., `CLV-143-8842`).",
+                    [{ label: "Use Demo Booking (CLV-143-8842)", value: "CLV-143-8842" }]
+                );
+            });
+        }
+
+        function handleRescheduleFlow(text) {
+            if (chatState.bookingStep === 1) {
+                const booking = BackendAPI.get_appointment(text);
+                if (!booking) {
+                    showTypingThen(() => {
+                        addBotMessage(
+                            "I couldn't find an active appointment with that number or Booking ID. Would you like to try again or connect with our clinic team?",
+                            [
+                                { label: "Try Demo ID (CLV-143-8842)", value: "CLV-143-8842" },
+                                { label: "Talk to Our Team", value: "Talk to Our Team" }
+                            ]
+                        );
+                    });
+                    return;
+                }
+                tempActionData.booking = booking;
+                chatState.bookingStep = 2;
+                showTypingThen(() => {
+                    addBotMessage(`Found booking **${booking.bookingId}** for **${booking.patientName}** (${formatReadableDate(booking.date)} at ${booking.time}).\n\nWhich new date would you prefer?`);
+                    renderInteractiveDatePicker((chosenDate) => {
+                        processInput(chosenDate, formatReadableDate(chosenDate));
+                    });
+                });
+                return;
+            }
+
+            if (chatState.bookingStep === 2) {
+                if (isPastDate(text) || isMonday(text)) {
+                    showTypingThen(() => {
+                        addBotMessage("Please choose a valid upcoming date (Tuesday to Sunday; closed Mondays).");
+                        renderInteractiveDatePicker((chosenDate) => {
+                            processInput(chosenDate, formatReadableDate(chosenDate));
+                        });
+                    });
+                    return;
+                }
+                tempActionData.newDate = text;
+                const slots = BackendAPI.check_available_slots(text, tempActionData.booking.treatment);
+                chatState.bookingStep = 3;
+                showTypingThen(() => {
+                    addBotMessage(`Available slots for **${formatReadableDate(text)}**. Please pick a new time:`, slots);
+                });
+                return;
+            }
+
+            if (chatState.bookingStep === 3) {
+                const res = BackendAPI.reschedule_appointment(tempActionData.booking.bookingId, {
+                    date: tempActionData.newDate,
+                    time: text
+                });
+                BackendAPI.save_lead({
+                    bookingStatus: "Rescheduled",
+                    bookingReference: tempActionData.booking.bookingId,
+                    preferredAppointmentDate: tempActionData.newDate,
+                    preferredTime: text
+                });
+                chatState.mode = "IDLE";
+                showTypingThen(() => {
+                    addBotMessage(
+                        `✅ Your appointment (**${res.booking.bookingId}**) has been rescheduled to **${formatReadableDate(res.booking.date)} at ${res.booking.time}** at Clove Dental, Noida Sector 143.`,
+                        MAIN_MENU_OPTIONS
+                    );
+                });
+            }
+        }
+
+        function startCancelFlow() {
+            chatState.mode = "CANCEL";
+            chatState.bookingStep = 1;
+            tempActionData = {};
+            showTypingThen(() => {
+                addBotMessage(
+                    "I can help you with cancellation. Please provide your **registered mobile number** or **Booking ID**.",
+                    [{ label: "Use Demo Booking (CLV-143-8842)", value: "CLV-143-8842" }]
+                );
+            });
+        }
+
+        function handleCancelFlow(text) {
+            if (chatState.bookingStep === 1) {
+                const booking = BackendAPI.get_appointment(text);
+                if (!booking) {
+                    showTypingThen(() => {
+                        addBotMessage("I couldn't locate that appointment. Would you like me to connect you with our clinic support team?", [
+                            { label: "Talk to Our Team", value: "Talk to Our Team", primary: true },
+                            { label: "Main Menu", value: "Main Menu" }
+                        ]);
+                    });
+                    return;
+                }
+                tempActionData.booking = booking;
+                chatState.bookingStep = 2;
+                showTypingThen(() => {
+                    addBotMessage(
+                        `We found appointment **${booking.bookingId}** scheduled for **${formatReadableDate(booking.date)} at ${booking.time}**.\n\nAre you sure you want to cancel this appointment?`,
+                        [
+                            { label: "Yes, Confirm Cancellation", value: "CONFIRM_CANCEL", danger: true },
+                            { label: "Keep Appointment", value: "Main Menu" }
+                        ]
+                    );
+                });
+                return;
+            }
+
+            if (chatState.bookingStep === 2) {
+                if (text === "CONFIRM_CANCEL" || text.toLowerCase().includes("yes")) {
+                    BackendAPI.cancel_appointment(tempActionData.booking.bookingId);
+                    BackendAPI.save_lead({
+                        bookingStatus: "Cancelled",
+                        bookingReference: tempActionData.booking.bookingId
+                    });
+                    chatState.mode = "IDLE";
+                    showTypingThen(() => {
+                        addBotMessage(
+                            `Your appointment (**${tempActionData.booking.bookingId}**) has been cancelled. Whenever you're ready to visit us in the future, I'll be happy to help you book again!`,
+                            MAIN_MENU_OPTIONS
+                        );
+                    });
+                } else {
+                    chatState.mode = "IDLE";
+                    showTypingThen(() => addBotMessage("Your appointment remains active. How else can I help?", MAIN_MENU_OPTIONS));
+                }
+            }
+        }
+
+        function startHandoverFlow() {
+            chatState.mode = "HANDOVER";
+            chatState.bookingStep = 1;
+            showTypingThen(() => {
+                addBotMessage("I'll connect you with our clinic support team so they can assist you further. May I have your **full name** first?");
+            });
+        }
+
+        function handleHandoverFlow(text) {
+            if (chatState.bookingStep === 1) {
+                crmLead.patientName = text;
+                chatState.bookingStep = 2;
+                showTypingThen(() => {
+                    addBotMessage("Please share your **10-digit mobile number** so our team can reach out to you.");
+                });
+                return;
+            }
+            if (chatState.bookingStep === 2) {
+                const valid = validateIndianMobile(text);
+                if (!valid) {
+                    showTypingThen(() => addBotMessage("Please enter a valid 10-digit Indian mobile number."));
+                    return;
+                }
+                crmLead.mobileNumber = valid;
+                chatState.bookingStep = 3;
+                showTypingThen(() => {
+                    addBotMessage("Briefly let us know your query or preferred callback time:");
+                });
+                return;
+            }
+            if (chatState.bookingStep === 3) {
+                BackendAPI.save_lead({
+                    bookingStatus: "Follow-up Required",
+                    conversationSummary: `Human Handover Requested: ${text}`
+                });
+                BackendAPI.transfer_to_agent(crmLead.conversationSummary);
+                chatState.mode = "IDLE";
+                showTypingThen(() => {
+                    addBotMessage(
+                        `Thank you, **${crmLead.patientName}**. Your request has been forwarded to our Clove Dental Sector 143 support team.\n\nA representative will call you at **${maskMobile(crmLead.mobileNumber)}** during clinic hours (11:00 AM – 7:00 PM, Tue–Sun), or you can call us directly at **+91 9667353232**.`,
+                        MAIN_MENU_OPTIONS
+                    );
+                });
+            }
+        }
+
+        // =========================================================================
+        // 11. DRAWER & UTILITY TRIGGERS
+        // =========================================================================
+        function toggleCrmDrawer() {
+            const drawer = document.getElementById("crm-drawer");
+            drawer.classList.toggle("hidden");
+        }
+
+        function toggleLanguageHint() {
+            processInput("Hindi mein baat karein", "Switch / Test Hindi & Hinglish");
+        }
+
+        // Initialize on window load
+        window.onload = function() {
+            initChatbot();
+        };
+    </script>
+</body>
+</html>
